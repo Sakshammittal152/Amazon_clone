@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -11,11 +12,12 @@ export async function api(path, options = {}) {
   };
 
   const token = getToken();
+
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${API_URL}/api${path}`, {
     ...options,
     headers
   });
@@ -29,7 +31,15 @@ export async function api(path, options = {}) {
   return data;
 }
 
-export const categories = ['all', 'electronics', 'kitchen', 'home', 'gaming', 'books', 'fashion'];
+export const categories = [
+  'all',
+  'electronics',
+  'kitchen',
+  'home',
+  'gaming',
+  'books',
+  'fashion'
+];
 
 export function formatPrice(price) {
   return new Intl.NumberFormat('en-IN', {
