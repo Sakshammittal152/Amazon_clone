@@ -1,20 +1,8 @@
 import express from "express";
-import pool from "../db.js";
+import { pool, parseProduct } from "../db.js";
 
 const router = express.Router();
 
-// Convert concatenated image string into array
-function parseProduct(product) {
-  return {
-    ...product,
-    images: product.images
-      ? product.images.split("||")
-      : [],
-    image_url: product.images
-      ? product.images.split("||")[0]
-      : null
-  };
-}
 
 // Get all products
 router.get("/", async (req, res) => {
