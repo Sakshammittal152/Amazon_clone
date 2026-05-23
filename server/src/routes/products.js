@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import pool from "../utils/db.js";
+
 const router = express.Router();
-const pool = require("../db");
 
 // Convert concatenated image string into array
 function parseProduct(product) {
@@ -15,22 +16,20 @@ function parseProduct(product) {
   };
 }
 
-
-// Get all products with search + category filter
+// Get all products
 router.get("/", async (req, res) => {
   try {
     const { search = "", category } = req.query;
 
     let sql = `
-      SELECT 
-        p.*,
-        (
-          SELECT GROUP_CONCAT(
-            pi.image_url SEPARATOR '||'
-          )
-          FROM product_images pi
-          WHERE pi.product_id = p.id
-        ) AS images
+      SELECT p.*,
+      (
+        SELECT GROUP_CONCAT(
+          pi.image_url SEPARATOR '||'
+        )
+        FROM product_images pi
+        WHERE pi.product_id = p.id
+      ) AS images
       FROM products p
       WHERE p.name LIKE ?
     `;
@@ -58,22 +57,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-// Get single product by ID
+// Get single product
 router.get("/:id", async (req, res) => {
   try {
 
     const [rows] = await pool.execute(
       `
-      SELECT 
-        p.*,
-        (
-          SELECT GROUP_CONCAT(
-            pi.image_url SEPARATOR '||'
-          )
-          FROM product_images pi
-          WHERE pi.product_id = p.id
-        ) AS images
+      SELECT p.*,
+      (
+        SELECT GROUP_CONCAT(
+          pi.image_url SEPARATOR '||'
+        )
+        FROM product_images pi
+        WHERE pi.product_id = p.id
+      ) AS images
       FROM products p
       WHERE p.id = ?
       `,
