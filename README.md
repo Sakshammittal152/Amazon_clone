@@ -227,9 +227,8 @@ Suggested deployment options:
 Add deployed links here:
 
 ```text
-GitHub Repository:
-Deployed Frontend:
-Deployed Backend:
+GitHub Repository:https://github.com/Sakshammittal152/Amazon_clone
+Deployed (on Railway):https://amazonclone-production-894a.up.railway.app/ 
 ```
 
 ## AI Tools Usage
