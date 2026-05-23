@@ -29,6 +29,8 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-app.listen(port, () => {
-  console.log(`API running on http://localhost:${port}`);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`API running on port ${PORT}`);
 });
